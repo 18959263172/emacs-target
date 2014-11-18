@@ -1,0 +1,204 @@
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(global-font-lock-mode t)
+ '(cua-mode nil)
+ '(current-language-environment "Chinese-GB")
+ '(ecb-gzip-setup (quote cons))
+ '(ecb-options-version "2.32")
+ '(ecb-source-path (quote ("c:/emacs")))
+ '(ecb-tar-setup (quote cons))
+ '(global-font-lock-mode t nil (font-core))
+ '(show-paren-mode nil nil (paren))) 
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+
+;;(set-language-environment 'Chinese-GB)
+;;(set-keyboard-coding-system 'euc-cn)
+;;(set-keyboard-coding-system 'chinese-iso-8bit)
+;;(set-clipboard-coding-system 'euc-cn)
+;;(set-terminal-coding-system 'euc-cn)
+;;(set-buffer-file-coding-system 'euc-cn)
+;;(set-selection-coding-system 'euc-cn) 
+;;(set-default-font "-misc-fixed-bold-r-normal--18-120-100-100-c-90-iso10646-1")
+
+;;;; 基本设置 ;;;;;
+;;设置默认工作目录 
+(setq default-directory "D:/workspace") 
+
+;; 设置备份目录。
+(setq backup-directory-alist '(("." . "C:/emacs/emacs_backup")))
+;; 不备份文件，不推荐
+;;(setq make-backup-files nil)
+
+;; 最大化窗口
+(defun w32-restore-frame ()
+"Restore a minimized frame"
+(interactive)
+(w32-send-sys-command 61728))
+;; 最小化窗口
+(defun w32-maximize-frame ()
+"Maximize the current frame"
+(interactive)
+(w32-send-sys-command 61488))
+;; 启动时最大化窗口
+(w32-maximize-frame)
+
+;; 设置光标为竖线
+(setq-default cursor-type 'bar)
+;; 设置光标为方块
+;; (setq-default cursor-type 'box) 
+
+;; 关闭起动时的那个“开机画面”
+(setq inhibit-startup-message t)
+
+;; 关闭烦人的出错时的提示声
+(setq visible-bell t)
+
+;; 加亮选中部分
+(transient-mark-mode t)
+
+;; 滚轮支持
+(setq mouse-wheel-mode t)
+
+;; 显示列号
+(setq column-number-mode t) 
+
+;; 不要在鼠标点击的那个地方插入剪贴板内容
+(setq mouse-yank-at-point t)
+
+;; 用一个很大的 kill ring
+(setq kill-ring-max 200)
+
+;; 把 fill-column 设为 60. 这样的文字更好读
+(setq default-fill-column 60)
+
+;; 不用 TAB 字符来indent, 这会引起很多奇怪的错误
+(setq-default indent-tabs-mode nil)
+(setq tab-stop-list ())
+;;(loop for x downfrom 40 to 1 do
+;;      (setq tab-stop-list (cons (* x 4) tab-stop-list)))
+
+;; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插入两个空格
+(setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
+(setq sentence-end-double-space nil)
+
+;; 可以递归的使用 minibuffer
+(setq enable-recursive-minibuffers t)
+
+;; 防止页面滚动时跳动， scroll-margin 3 可以在靠近屏幕边沿3行时就开始滚动，可以很好的看到上下文。
+(setq scroll-margin 3
+      scroll-conservatively 10000)
+
+;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
+(show-paren-mode t)
+(setq show-paren-style 'parentheses)
+
+;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
+(mouse-avoidance-mode 'animate)
+
+;; 在标题栏显示buffer的名字，而不是 emacs@wangyin.com 这样没用的提示
+(setq frame-title-format "emacs@%b")
+
+;; 让 Emacs 可以直接打开和显示图片
+(auto-image-file-mode)
+
+;; 把这些缺省禁用的功能打开
+(put 'set-goal-column 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'LaTeX-hide-environment 'disabled nil)
+
+;; 让 dired 可以递归的拷贝和删除目录
+(setq dired-recursive-copies 'top)
+(setq dired-recursive-deletes 'top)
+
+;; Shell 使用 ansi color
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; 使用Win下的选择习惯
+;;用shift+方向键进行选择
+(pc-selection-mode)
+;;;; end 基本设置 ;;;;;
+
+;;;; C/C++ 风格设置 ;;;;
+(add-hook 'c-mode-hook
+    '(lambda ()
+        (c-set-style "Stroustrup")))
+;        (c-toggle-auto-state)))
+
+(add-hook 'c++-mode-hook
+    '(lambda ()
+        (c-set-style "Stroustrup")))
+;        (c-toggle-auto-state)))
+
+(setq default-tab-width 4) 
+(setq c-basic-offset 4) 
+;;;; end C/C++ 风格设置 ;;;;
+
+
+
+;;(setq transient-mark-mode t)
+;;(setq emacs-wiki-meta-charset "gb2312")
+;;(setq default-fill-column 160)
+;;(setq default-tab-width 4)
+;;(setq inhibit-startup-message t)
+;;(setq column-number-mode t) 
+;;(setq tab-stop-list ())
+;;(setq scroll-margin 3 scroll-conservatively 10000)
+;;(show-paren-mode t)
+;;(setq show-paren-style 'parentheses)
+;;(mouse-avoidance-mode 'animate)
+
+
+;;;; 插件设置 ;;;;
+;; 可以把代码写在其它文件里，然后在.emacs中添加
+;; (load "~/your_file.el")
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-gnome2)
+
+(require 'xcscope) 
+(add-to-list 'load-path "speedbar")
+
+(autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
+(autoload 'speedbar-get-focus "speedbar" "Jump to speedbar frame" t)
+(define-key-after (lookup-key global-map [menu-bar tools])
+    [speedbar] '("Speedbar" . speedbar-frame-mode) [calendar])
+
+(add-to-list 'load-path "eieio")
+(add-to-list 'load-path "semantic")
+
+(require 'semantic-load)
+(setq semantic-load-turn-everything-on t)
+(setq semantic-stickyfunc-mode nil)
+
+(require 'tabbar)
+(tabbar-mode)
+;;(define-prefix-command 'window-map)
+;;(global-set-key (kbd "") 'tabbar-backward-group)
+;;(global-set-key (kbd "") 'tabbar-forward-group)
+;;(global-set-key (kbd "") 'tabbar-backward)
+;;(global-set-key (kbd "") 'tabbar-forward)
+(global-set-key "\C-xn" 'next-buffer) 
+(global-set-key "\C-xp" 'prev-buffer) 
+
+(require 'ecb) 
+(setq ecb-tip-of-the-day nil)
+(setq ecb-auto-activate t)
+(setq ecb-use-speedbar-instead-native-tree-buffer 'source)
+(setq ecb-primary-secondary-mouse-buttons 'mouse-1--C-mouse-1)
+(setq ecb-auto-compatibility-check nil) 
+(setq inhibit-startup-message t)
+(setq ecb-major-modes-show-or-hide (quote ((c-mode c++-mode jde-mode) text-mode emacs-lisp-mode emacs-wiki-mode Info-mode custom-mode help-mode fundamental-mode python-mode)))
+(setq ecb-layout-window-sizes (quote (("left8" (0.21296296296296297 . 0.2571428571428571) (0.21296296296296297 . 0.22857142857142856) (0.21296296296296297 . 0.2571428571428571) (0.21296296296296297 . 0.17142857142857143)))))
+(global-set-key (quote [S-f9]) (quote ecb-activate))
+(global-set-key (quote [S-f10]) (quote ecb-deactivate))
